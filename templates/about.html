@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .core-member {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+    .core-member img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    .core-member-info h3 {
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+    .core-member-info p {
+        margin: 4px 0 0 0;
+        color: var(--text-secondary);
+    }
+</style>
+<h1> 
+    About the Club
+</h1>
+<br>
+<p style="color: var(--text-secondary);">
+    The Civil Services Club at IIT Mandi was established with the vision of creating a platform for students interested in governance, public administration, policy-making, and competitive examinations such as UPSC, IES, CDS, and other civil services.
+</p>
+<br>
+<p style="color: var(--text-secondary);">
+    The club aims to encourage informed discussions, analytical thinking, leadership, and awareness about national and global issues among students. As a newly formed club, our primary objective this year was to build a strong foundation and create an active community of students interested in public service and nation-building.
+    The club also serves as a space where students from different academic backgrounds can interact, learn together, and develop a broader understanding of society, governance, and current affairs beyond technical education.s through engaging activities, insightful discussions, and comprehensive resources. 
+    Our mission is to nurture technocrats for public governance, empowering them to make a positive impact on society.
+</p>
+<br>
+<br>
+<h2>Core Members</h2>
+<br>
+<div class="core-members"> 
+    {% for member in core %}
+    <div class="core-member">
+        <img src="{{ url_for('static', filename='images/core_members/' + member.profile_image) }}" alt="{{ member.name }}">
+        <div class="core-member-info">
+            <h3>{{ member.name }}</h3>
+            <p>{{ member.role }}</p>
+            <p><i class="fa-solid fa-envelope"></i> {{ member.email }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

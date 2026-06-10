@@ -1,0 +1,5 @@
+current_affairs=[
+        {"date": "June 11, 2026", "category": "Economy", "title": "Understanding the Digital Rupee Expansion Framework", "summary": "An in-depth analysis of the Reserve Bank of India's newly rolled out programmable functionalities for CBDC-R and its impact on structural liquidity."},
+        {"date": "June 09, 2026", "category": "Environment", "title": "Global Biofuel Alliance: Targets vs Achievements", "summary": "Evaluating the clean energy transition benchmarks achieved by member countries under the GBA framework, specifically tracking ethanol blending mandates."},
+        {"date": "June 05, 2026", "category": "Polity", "title": "The Evolution of Cooperative Federalism via Article 263", "summary": "Examining recent recommendations by the Inter-State Council secretariat concerning structural consultative machinery during interstate river water conflicts."}
+    ]

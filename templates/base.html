@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Civil Services Club | IIT Mandi</title>
+    <link rel ="icon" href="{{ url_for('static', filename='images/logo.jpeg') }}" type="image/jpeg">
+    <style>
+        /* Styling for the club logo in the navigation bar */
+        .nav-logo {
+            height: 3rem; /* Adjust size to match the previous font-awesome icon's height */
+            vertical-align: middle; /* Align with text */
+            margin-right: 8px; /* Spacing between logo and text */
+        }
+    </style>
     <link rel="stylesheet" href="{{ url_with_modules if url_with_modules else url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -12,7 +21,8 @@
     <nav>
         <div class="nav-container">
             <div class="logo-section">
-                <i class="fa-solid fa-gavel" style="color: var(--accent); font-size: 1.5rem;"></i>
+                <!-- Replacing the gavel icon with the club logo image -->
+                <img src="{{ url_for('static', filename='images/logo.jpeg') }}" alt="Club Logo" class="nav-logo">
                 <h1>Civil Services Club <br>IIT Mandi</h1>
             </div>
             <button class="menu-toggle" aria-label="Toggle Menu">
@@ -20,12 +30,14 @@
             </button>
             <ul class="nav-links">
                 <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
                 <li><a href="{{ url_for('activities') }}">Activities</a></li>
                 <li><a href="{{ url_for('current_affairs') }}">Current Affairs</a></li>
                 <li><a href="{{ url_for('quizzes') }}">Quizzes</a></li>
                 <li><a href="{{ url_for('notes') }}">Notes</a></li>
                 <li><a href="{{ url_for('pyqs') }}">PYQs</a></li>
-                <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+                
             </ul>
         </div>
     </nav>
@@ -35,7 +47,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 Civil Services Club, <span>IIT Mandi</span>. Built for Leadership and Excellence.</p>
+        <p>&copy; 2026 Civil Services Club, <span>IIT Mandi</span>. Aim Aspire Achieve.</p>
     </footer>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>

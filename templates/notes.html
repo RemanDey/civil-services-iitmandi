@@ -51,7 +51,7 @@
                 <h4 style="font-weight: 600; margin-bottom: 4px;">{{ item.title }}</h4>
                 <small style="color: var(--text-secondary);"><i class="fa-regular fa-file-pdf"></i> Format Variant: {{ item.type }}</small>
             </div>
-            <a href="#" class="download-btn"><i class="fa-solid fa-download"></i> Get</a>
+            <a href="{{ item.download_link }}" class="download-btn"><i class="fa-solid fa-download"></i> Get</a>
         </div>
         {% endfor %}
     </div>
