@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .notes-section {
+        margin-bottom: 40px;
+    }
+    .notes-section h3 {
+        font-size: 1.5rem;
+        border-left: 4px solid var(--accent);
+        padding-left: 12px;
+        margin-bottom: 20px;
+    }
+    .notes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 20px;
+    }
+    .note-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .download-btn {
+        background: var(--glass-focus);
+        border: 1px solid var(--glass-border);
+        color: white;
+        padding: 8px 14px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .download-btn:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+    }
+</style>
+
+<h2 class="section-title">Knowledge & Study Repositories</h2>
+
+{% for category, items in categories.items() %}
+<div class="notes-section">
+    <h3>{{ category }} Modules</h3>
+    <div class="notes-grid">
+        {% for item in items %}
+        <div class="glass-card note-card">
+            <div>
+                <h4 style="font-weight: 600; margin-bottom: 4px;">{{ item.title }}</h4>
+                <small style="color: var(--text-secondary);"><i class="fa-regular fa-file-pdf"></i> Format Variant: {{ item.type }}</small>
+            </div>
+            <a href="#" class="download-btn"><i class="fa-solid fa-download"></i> Get</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

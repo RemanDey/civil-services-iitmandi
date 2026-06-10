@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .feed-container {
+        max-width: 850px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+    .feed-meta {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-bottom: 12px;
+    }
+    .cat-tag {
+        background: var(--glass-focus);
+        color: #fff;
+        padding: 2px 10px;
+        border-radius: 6px;
+        font-weight: 500;
+    }
+    .readmore-link {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 16px;
+    }
+    .readmore-link:hover { text-decoration: underline; }
+</style>
+
+<h2 class="section-title">Daily Current Affairs Analysis</h2>
+
+<div class="feed-container">
+    {% for feed in feeds %}
+    <div class="glass-card">
+        <div class="feed-meta">
+            <span><i class="fa-regular fa-calendar"></i> {{ feed.date }}</span>
+            <span class="cat-tag">{{ feed.category }}</span>
+        </div>
+        <h3 style="margin-bottom: 12px;">{{ feed.title }}</h3>
+        <p style="color: var(--text-secondary); line-height: 1.6;">{{ feed.summary }}</p>
+        <a href="#" class="readmore-link">Read Full Editorial Review <i class="fa-solid fa-arrow-right-long"></i></a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

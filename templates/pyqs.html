@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .filter-wrapper {
+        margin-bottom: 24px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+    .filter-select {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        color: #fff;
+        padding: 10px 16px;
+        border-radius: 8px;
+        outline: none;
+    }
+    .filter-select option {
+        background: var(--bg-dark);
+        color: #fff;
+    }
+    .table-container {
+        overflow-x: auto;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+    }
+    th, td {
+        padding: 16px;
+        border-bottom: 1px solid var(--glass-border);
+    }
+    th {
+        font-weight: 600;
+        color: var(--accent);
+        background: rgba(255,255,255,0.02);
+    }
+    tr:hover td { background: rgba(255,255,255,0.01); }
+</style>
+
+<h2 class="section-title">Past Year Question Vault</h2>
+
+<div class="filter-wrapper">
+    <select class="filter-select" id="examFilter" onchange="filterPapers()">
+        <option value="All">All Exams</option>
+        <option value="UPSC CSE">UPSC CSE</option>
+        <option value="UPSC IFoS">UPSC IFoS</option>
+    </select>
+    <select class="filter-select" id="yearFilter" onchange="filterPapers()">
+        <option value="All">All Years</option>
+        <option value="2025">2025</option>
+        <option value="2024">2024</option>
+        <option value="2023">2023</option>
+    </select>
+</div>
+
+<div class="glass-card table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Exam Category</th>
+                <th>Paper Module Description</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="pyq-table-body">
+            {% for paper in papers %}
+            <tr class="pyq-row" data-exam="{{ paper.exam }}" data-year="{{ paper.year }}">
+                <td style="font-weight: 600;">{{ paper.year }}</td>
+                <td><span style="background:var(--glass-focus); padding:4px 8px; border-radius:6px; font-size:0.85rem;">{{ paper.exam }}</span></td>
+                <td>{{ paper.paper }}</td>
+                <td><a href="{{ paper.link }}" style="color: var(--accent); text-decoration:none; font-weight:600;"><i class="fa-solid fa-file-arrow-down"></i> Download</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function filterPapers() {
+        const examVal = document.getElementById("examFilter").value;
+        const yearVal = document.getElementById("yearFilter").value;
+        const rows = document.querySelectorAll(".pyq-row");
+
+        rows.forEach(row => {
+            const matchExam = (examVal === "All" || row.getAttribute("data-exam") === examVal);
+            const matchYear = (yearVal === "All" || row.getAttribute("data-year") === yearVal);
+            row.style.display = (matchExam && matchYear) ? "" : "none";
+        });
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 24px;
+    }
+    .gallery-item {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        cursor: pointer;
+        height: 220px;
+    }
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+    .gallery-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(10, 12, 16, 0.75);
+        backdrop-filter: blur(6px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        padding: 16px;
+        text-align: center;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-item:hover img { transform: scale(1.05); }
+
+    /* Lightbox Modal CSS */
+    .lightbox {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.9);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+    }
+    .lightbox img {
+        max-width: 85%;
+        max-height: 80vh;
+        border-radius: 8px;
+        box-shadow: 0 0 30px rgba(255,255,255,0.1);
+    }
+    .lightbox-close {
+        position: absolute;
+        top: 30px;
+        right: 40px;
+        color: white;
+        font-size: 2.5rem;
+        cursor: pointer;
+    }
+</style>
+
+<h2 class="section-title">Club Moments Gallery</h2>
+
+<div class="gallery-grid">
+    {% for img in images %}
+    <div class="gallery-item glass-card" onclick="openLightbox('{{ img.url }}')">
+        <img src="{{ img.url }}" alt="{{ img.title }}">
+        <div class="gallery-overlay">
+            <h4 style="font-weight: 600;">{{ img.title }}</h4>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightbox-img" src="" alt="View Enlarged Container">
+</div>
+
+<script>
+    function openLightbox(url) {
+        document.getElementById('lightbox-img').src = url;
+        document.getElementById('lightbox').style.display = 'flex';
+    }
+    function closeLightbox() {
+        document.getElementById('lightbox').style.display = 'none';
+    }
+</script>
+{% endblock %}
