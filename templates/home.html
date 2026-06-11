@@ -49,8 +49,33 @@
         gap: 32px;
     }
     @media (max-width: 768px) {
-        .home-grid { grid-template-columns: 1fr; }
-        .hero-section h2 { font-size: 2.6rem; }
+        .home-grid { 
+            grid-template-columns: 1fr; 
+            gap: 20px;
+        }
+        .hero-section {
+            padding: 40px 10px;
+            margin-bottom: 30px;
+        }
+        .hero-section h2 { 
+            font-size: 2.4rem; 
+        }
+        .hero-section p {
+            font-size: 1.1rem;
+            margin-bottom: 24px;
+        }
+    }
+    @media (max-width: 480px) {
+        .hero-section h2 { 
+            font-size: 1.85rem; 
+        }
+        .hero-section p {
+            font-size: 0.95rem;
+        }
+        .cta-btn {
+            width: 100%;
+            text-align: center;
+        }
     }
     .announcement-item {
         border-bottom: 1px solid var(--glass-border);
@@ -76,7 +101,7 @@
 </style>
 
 <section class="hero-section">
-    <h2>Nurturing Technocrats <br>For Public Governance</h2>
+    <h2>Nurturing Technocrats <br class="desktop-only">For Public Governance</h2>
     <p>Empouring the civil services ecosystem within IIT Mandi through peer-led strategy pipelines, structural knowledge repos, and target driven evaluation programs.</p>
     <a href="{{ url_for('quizzes') }}" class="cta-btn">Begin Assessment</a>
 </section>

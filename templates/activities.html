@@ -39,6 +39,14 @@
         transform: scale(1.3);
         box-shadow: 0 0 15px var(--accent), 0 0 5px rgba(255, 255, 255, 0.5);
     }
+    .event-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
     .status-badge {
         font-size: 0.72rem;
         font-weight: 700;
@@ -46,7 +54,6 @@
         letter-spacing: 0.5px;
         padding: 4px 12px;
         border-radius: 20px;
-        float: right;
     }
     .status-upcoming { 
         background: rgba(16, 185, 129, 0.12); 
@@ -68,11 +75,13 @@
     <div class="timeline-event">
         <div class="timeline-dot"></div>
         <div class="glass-card">
-            <span class="status-badge {% if event.status == 'Upcoming' %}status-upcoming{% else %}status-past{% endif %}">
-                {{ event.status }}
-            </span>
-            <small style="color: var(--accent); font-weight: 600;">{{ event.date }}</small>
-            <h3 style="margin: 8px 0 12px 0;">{{ event.title }}</h3>
+            <div class="event-meta">
+                <small style="color: var(--accent); font-weight: 600;">{{ event.date }}</small>
+                <span class="status-badge {% if event.status == 'Upcoming' %}status-upcoming{% else %}status-past{% endif %}">
+                    {{ event.status }}
+                </span>
+            </div>
+            <h3 style="margin: 0 0 12px 0;">{{ event.title }}</h3>
             <p style="color: var(--text-secondary); line-height: 1.6;">{{ event.desc }}</p>
         </div>
     </div>
