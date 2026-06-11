@@ -23,7 +23,6 @@ This web application is built using a modular and lightweight architecture:
 -   **Modular Data Management**: Content such as announcements, activities, notes, PYQs, and core member details are organized into separate Python modules. This approach enhances maintainability and makes content updates straightforward without altering the core application logic.
 -   **Templating Engine**: Utilizes **Jinja2** for rendering dynamic HTML content, allowing for clean separation of presentation from business logic.
 -   **Static Assets**: Cascading Style Sheets (CSS), JavaScript files, and images are served efficiently from the `static/` directory.
--   **Configuration**: Application-wide settings and sensitive information are managed through `config.py`, promoting best practices for environment-specific configurations.
 
 ## Setup and Installation
 

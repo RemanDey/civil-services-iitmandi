@@ -9,43 +9,70 @@
     .option-btn {
         display: block;
         width: 100%;
-        background: var(--glass-bg);
+        background: rgba(255, 255, 255, 0.02);
         border: 1px solid var(--glass-border);
-        padding: 14px 20px;
-        border-radius: 10px;
+        padding: 16px 20px;
+        border-radius: 12px;
         color: var(--text-primary);
         text-align: left;
-        margin-bottom: 12px;
+        margin-bottom: 14px;
         cursor: pointer;
         font-size: 1rem;
-        transition: all 0.2s;
+        font-weight: 500;
+        transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
-    .option-btn:hover { background: var(--glass-focus); }
-    .option-btn.selected { border-color: var(--accent); background: rgba(99, 102, 241, 0.15); }
+    .option-btn:hover { 
+        background: rgba(255, 91, 14, 0.05); 
+        border-color: rgba(255, 91, 14, 0.35);
+        transform: translateX(5px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .option-btn.selected { 
+        border-color: var(--accent); 
+        background: rgba(255, 91, 14, 0.15); 
+        box-shadow: 0 0 20px rgba(255, 91, 14, 0.2), inset 0 0 0 1px var(--accent);
+        color: #fff;
+        font-weight: 600;
+    }
     
     .action-row {
         display: flex;
         justify-content: space-between;
-        margin-top: 24px;
+        margin-top: 30px;
     }
     .quiz-nav-btn {
-        background: var(--glass-focus);
-        border: none;
-        padding: 10px 24px;
-        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 12px 26px;
+        border-radius: 10px;
         color: white;
         cursor: pointer;
-        font-weight: 600;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        transition: all 0.2s ease;
     }
-    #submit-btn { background: var(--accent); }
+    .quiz-nav-btn:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px);
+    }
+    #submit-btn { 
+        background: var(--accent-gradient); 
+        border: none;
+        box-shadow: 0 4px 15px var(--accent-glow);
+    }
+    #submit-btn:hover {
+        box-shadow: 0 6px 20px rgba(255, 91, 14, 0.45);
+        background: linear-gradient(135deg, #ff6c24, #ff9351);
+    }
 
     /* Modal Styling */
     .modal {
         display: none;
         position: fixed;
         inset: 0;
-        background: rgba(10,12,16,0.85);
-        backdrop-filter: blur(16px);
+        background: rgba(3, 3, 5, 0.9);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         z-index: 3000;
         align-items: center;
         justify-content: center;
@@ -53,6 +80,7 @@
     .modal-content {
         max-width: 450px;
         text-align: center;
+        border-color: rgba(255, 91, 14, 0.25);
     }
 </style>
 

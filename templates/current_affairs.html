@@ -7,34 +7,48 @@
         margin: 0 auto;
         display: flex;
         flex-direction: column;
-        gap: 24px;
+        gap: 28px;
     }
     .feed-meta {
         display: flex;
-        gap: 16px;
+        gap: 18px;
         align-items: center;
         font-size: 0.85rem;
         color: var(--text-secondary);
-        margin-bottom: 12px;
+        margin-bottom: 14px;
     }
     .cat-tag {
-        background: var(--glass-focus);
-        color: #fff;
-        padding: 2px 10px;
+        background: rgba(255, 91, 14, 0.15);
+        color: var(--accent);
+        border: 1px solid rgba(255, 91, 14, 0.25);
+        padding: 3px 12px;
         border-radius: 6px;
-        font-weight: 500;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+        letter-spacing: 0.5px;
     }
     .readmore-link {
         color: var(--accent);
         text-decoration: none;
-        font-weight: 600;
+        font-weight: 700;
         font-size: 0.95rem;
         display: inline-flex;
         align-items: center;
-        gap: 6px;
-        margin-top: 16px;
+        gap: 8px;
+        margin-top: 20px;
+        transition: all 0.3s ease;
     }
-    .readmore-link:hover { text-decoration: underline; }
+    .readmore-link i {
+        transition: transform 0.3s ease;
+    }
+    .readmore-link:hover {
+        color: var(--accent-hover);
+        text-decoration: none;
+    }
+    .readmore-link:hover i {
+        transform: translateX(6px);
+    }
 </style>
 
 <h2 class="section-title">Daily Current Affairs Analysis</h2>

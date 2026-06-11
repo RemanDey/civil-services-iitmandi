@@ -2,53 +2,76 @@
 
 {% block content %}
 <style>
+    .about-card {
+        margin-bottom: 40px;
+        line-height: 1.7;
+    }
+    .core-members {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 24px;
+        margin-top: 20px;
+    }
     .core-member {
         display: flex;
         align-items: center;
-        gap: 16px;
-        margin-bottom: 20px;
+        gap: 20px;
+        padding: 20px;
+        transition: all 0.3s ease;
     }
     .core-member img {
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
         border-radius: 50%;
         object-fit: cover;
+        border: 2px solid var(--accent);
+        box-shadow: 0 0 15px var(--accent-glow);
+    }
+    .core-member:hover img {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px var(--accent);
     }
     .core-member-info h3 {
         margin: 0;
-        font-size: 1.2rem;
-        font-weight: 600;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #fff;
     }
     .core-member-info p {
         margin: 4px 0 0 0;
         color: var(--text-secondary);
+        font-size: 0.92rem;
+    }
+    .core-member-info p i {
+        color: var(--accent);
+        margin-right: 4px;
     }
 </style>
-<h1> 
-    About the Club
-</h1>
-<br>
-<p style="color: var(--text-secondary);">
-    The Civil Services Club at IIT Mandi was established with the vision of creating a platform for students interested in governance, public administration, policy-making, and competitive examinations such as UPSC, IES, CDS, and other civil services.
-</p>
-<br>
-<p style="color: var(--text-secondary);">
-    The club aims to encourage informed discussions, analytical thinking, leadership, and awareness about national and global issues among students. As a newly formed club, our primary objective this year was to build a strong foundation and create an active community of students interested in public service and nation-building.
-    The club also serves as a space where students from different academic backgrounds can interact, learn together, and develop a broader understanding of society, governance, and current affairs beyond technical education.s through engaging activities, insightful discussions, and comprehensive resources. 
-    Our mission is to nurture technocrats for public governance, empowering them to make a positive impact on society.
-</p>
-<br>
-<br>
-<h2>Core Members</h2>
-<br>
+
+<div class="glass-card about-card">
+    <h2 style="margin-bottom: 16px; font-weight: 800; background: linear-gradient(to right, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">About the Club</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 16px;">
+        The Civil Services Club at IIT Mandi was established with the vision of creating a platform for students interested in governance, public administration, policy-making, and competitive examinations such as UPSC, IES, CDS, and other civil services.
+    </p>
+    <p style="color: var(--text-secondary);">
+        The club aims to encourage informed discussions, analytical thinking, leadership, and awareness about national and global issues among students. As a newly formed club, our primary objective this year was to build a strong foundation and create an active community of students interested in public service and nation-building.
+    </p>
+    <p style="color: var(--text-secondary); margin-top: 16px;">
+        The club also serves as a space where students from different academic backgrounds can interact, learn together, and develop a broader understanding of society, governance, and current affairs beyond technical education, through engaging activities, insightful discussions, and comprehensive resources. 
+        Our mission is to nurture technocrats for public governance, empowering them to make a positive impact on society.
+    </p>
+</div>
+
+<h2 style="font-weight: 800; margin-bottom: 16px; border-left: 4px solid var(--accent); padding-left: 12px;">Core Members</h2>
+
 <div class="core-members"> 
     {% for member in core %}
-    <div class="core-member">
+    <div class="core-member glass-card">
         <img src="{{ url_for('static', filename='images/core_members/' + member.profile_image) }}" alt="{{ member.name }}">
         <div class="core-member-info">
             <h3>{{ member.name }}</h3>
-            <p>{{ member.role }}</p>
-            <p><i class="fa-solid fa-envelope"></i> {{ member.email }}</p>
+            <p style="color: var(--accent); font-weight: 600;">{{ member.role }}</p>
+            <p style="margin-top: 8px;"><i class="fa-solid fa-envelope"></i>{{ member.email }}</p>
         </div>
     </div>
     {% endfor %}

@@ -3,25 +3,35 @@
 {% block content %}
 <style>
     .filter-wrapper {
-        margin-bottom: 24px;
+        margin-bottom: 30px;
         display: flex;
-        gap: 12px;
+        gap: 16px;
         flex-wrap: wrap;
     }
     .filter-select {
-        background: var(--glass-bg);
+        background: rgba(255, 255, 255, 0.03);
         border: 1px solid var(--glass-border);
         color: #fff;
-        padding: 10px 16px;
-        border-radius: 8px;
+        padding: 12px 20px;
+        border-radius: 10px;
         outline: none;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    .filter-select:hover {
+        border-color: rgba(255, 91, 14, 0.35);
+        background: rgba(255, 91, 14, 0.04);
     }
     .filter-select option {
-        background: var(--bg-dark);
+        background: #0d0d12;
         color: #fff;
+        padding: 10px;
     }
     .table-container {
         overflow-x: auto;
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
     }
     table {
         width: 100%;
@@ -29,15 +39,38 @@
         text-align: left;
     }
     th, td {
-        padding: 16px;
+        padding: 18px 24px;
         border-bottom: 1px solid var(--glass-border);
     }
     th {
-        font-weight: 600;
+        font-weight: 700;
         color: var(--accent);
-        background: rgba(255,255,255,0.02);
+        background: rgba(255, 91, 14, 0.02);
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        border-bottom: 2px solid rgba(255, 91, 14, 0.2);
     }
-    tr:hover td { background: rgba(255,255,255,0.01); }
+    td {
+        font-size: 0.95rem;
+    }
+    tr:hover td { 
+        background: rgba(255, 91, 14, 0.02); 
+    }
+    .download-link {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.25s ease;
+    }
+    .download-link:hover {
+        color: var(--accent-hover);
+        transform: translateY(-1px);
+        text-shadow: 0 0 10px var(--accent-glow);
+    }
 </style>
 
 <h2 class="section-title">Past Year Question Vault</h2>
@@ -72,7 +105,7 @@
                 <td style="font-weight: 600;">{{ paper.year }}</td>
                 <td><span style="background:var(--glass-focus); padding:4px 8px; border-radius:6px; font-size:0.85rem;">{{ paper.exam }}</span></td>
                 <td>{{ paper.paper }}</td>
-                <td><a href="{{ paper.link }}" style="color: var(--accent); text-decoration:none; font-weight:600;"><i class="fa-solid fa-file-arrow-down"></i> Download</a></td>
+                <td><a href="{{ paper.link }}" class="download-link"><i class="fa-solid fa-file-arrow-down"></i> Download</a></td>
             </tr>
             {% endfor %}
         </tbody>

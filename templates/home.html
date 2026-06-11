@@ -4,54 +4,73 @@
 <style>
     .hero-section {
         text-align: center;
-        padding: 60px 20px;
-        margin-bottom: 40px;
+        padding: 80px 20px;
+        margin-bottom: 50px;
     }
     .hero-section h2 {
-        font-size: 3.5rem;
-        font-weight: 800;
-        margin-bottom: 16px;
-        line-height: 1.2;
+        font-size: 3.8rem;
+        font-weight: 900;
+        margin-bottom: 20px;
+        line-height: 1.15;
+        letter-spacing: -1px;
+        background: linear-gradient(135deg, #ffffff 30%, #ff5b0e 90%, #ffaa7a 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 0 30px rgba(255, 91, 14, 0.1));
     }
     .hero-section p {
-        font-size: 1.2rem;
+        font-size: 1.25rem;
         color: var(--text-secondary);
-        max-width: 700px;
-        margin: 0 auto 32px auto;
+        max-width: 750px;
+        margin: 0 auto 36px auto;
+        line-height: 1.6;
     }
     .cta-btn {
-        background: var(--accent);
+        background: var(--accent-gradient);
         color: white;
-        padding: 12px 32px;
+        padding: 14px 36px;
         border-radius: 30px;
         text-decoration: none;
-        font-weight: 600;
-        box-shadow: 0 4px 14px var(--accent-glow);
-        transition: transform 0.2s ease;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 20px var(--accent-glow);
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
         display: inline-block;
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
     .cta-btn:hover {
-        transform: translateY(-2px);
+        transform: translateY(-3px) scale(1.03);
+        box-shadow: 0 8px 30px rgba(255, 91, 14, 0.4);
+        border-color: rgba(255, 255, 255, 0.2);
     }
     .home-grid {
         display: grid;
-        grid-template-columns: 1.6fr 1fr;
+        grid-template-columns: 1.5fr 1fr;
         gap: 32px;
     }
     @media (max-width: 768px) {
         .home-grid { grid-template-columns: 1fr; }
-        .hero-section h2 { font-size: 2.3rem; }
+        .hero-section h2 { font-size: 2.6rem; }
     }
     .announcement-item {
         border-bottom: 1px solid var(--glass-border);
-        padding: 12px 0;
+        padding: 16px 0;
+        transition: padding-left 0.3s ease;
+    }
+    .announcement-item:hover {
+        padding-left: 6px;
     }
     .announcement-item:last-child { border: none; }
     .tag {
-        font-size: 0.75rem;
-        padding: 2px 8px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 3px 10px;
         border-radius: 12px;
-        background: var(--accent);
+        background: rgba(255, 91, 14, 0.15);
+        color: var(--accent);
+        border: 1px solid rgba(255, 91, 14, 0.25);
         margin-left: 8px;
     }
 </style>
