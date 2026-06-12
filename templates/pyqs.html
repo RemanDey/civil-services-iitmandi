@@ -78,14 +78,15 @@
 <div class="filter-wrapper">
     <select class="filter-select" id="examFilter" onchange="filterPapers()">
         <option value="All">All Exams</option>
-        <option value="UPSC CSE">UPSC CSE</option>
-        <option value="UPSC IFoS">UPSC IFoS</option>
+        {% for exam in exams %}
+        <option value="{{ exam }}">{{ exam }}</option>
+        {% endfor %}
     </select>
     <select class="filter-select" id="yearFilter" onchange="filterPapers()">
         <option value="All">All Years</option>
-        <option value="2025">2025</option>
-        <option value="2024">2024</option>
-        <option value="2023">2023</option>
+        {% for year in years %}
+        <option value="{{ year }}">{{ year }}</option>
+        {% endfor %}
     </select>
 </div>
 

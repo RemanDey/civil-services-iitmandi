@@ -34,6 +34,37 @@
         color: #fff;
         font-weight: 600;
     }
+    .option-btn.correct {
+        border-color: #22c55e;
+        background: rgba(34, 197, 94, 0.14);
+        color: #fff;
+    }
+    .option-btn.incorrect {
+        border-color: #ef4444;
+        background: rgba(239, 68, 68, 0.14);
+        color: #fff;
+    }
+    .answer-panel {
+        display: none;
+        margin-top: 18px;
+        padding: 16px;
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.035);
+        color: var(--text-secondary);
+        line-height: 1.55;
+    }
+    .answer-panel strong {
+        color: #fff;
+    }
+    .answer-panel a {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 700;
+    }
+    .answer-panel a:hover {
+        color: var(--accent-hover);
+    }
     
     .action-row {
         display: flex;
@@ -87,11 +118,12 @@
 
 <div class="quiz-box glass-card" id="quiz-card">
     <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-        <span style="color: var(--accent); font-weight: 600;" id="progress-text">Question 1 of 3</span>
+        <span style="color: var(--accent); font-weight: 600;" id="progress-text">Question 1 of {{ questions|length }}</span>
     </div>
     <h3 id="question-text" style="margin-bottom: 24px; line-height: 1.4;">Loading Quiz Content Question Block...</h3>
     
     <div id="options-container"></div>
+    <div class="answer-panel" id="answer-panel"></div>
 
     <div class="action-row">
         <button class="quiz-nav-btn" id="prev-btn" onclick="changeQuestion(-1)">Previous</button>
@@ -105,32 +137,16 @@
         <i class="fa-solid fa-trophy" style="font-size: 3.5rem; color: #f59e0b; margin-bottom: 16px;"></i>
         <h2>Evaluation Finished!</h2>
         <p style="margin: 12px 0 24px 0; font-size: 1.2rem; color: var(--text-secondary);">
-            Your Score: <span id="final-score" style="color: #fff; font-weight: 700;">0</span> / 3
+            Your Score: <span id="final-score" style="color: #fff; font-weight: 700;">0</span> / {{ questions|length }}
         </p>
-        <button class="quiz-nav-btn" id="submit-btn" onclick="window.location.reload()">Retry Assessment</button>
+        <button class="quiz-nav-btn" onclick="window.location.reload()">Retry Assessment</button>
     </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-    const questions = [
-        {
-            q: "Which constitutional amendment structure brought functional framework layout integration for local self governments (Panchayats)?",
-            options: ["71st Constitutional Amendment", "73rd Constitutional Amendment", "74th Constitutional Amendment", "86th Constitutional Amendment"],
-            correct: 1
-        },
-        {
-            q: "The structural architecture of the 'Basic Structure Doctrine' emerged systematically through which legal landmark case standard?",
-            options: ["Golaknath Case", "Minerva Mills Case", "Kesavananda Bharati Case", "Maneka Gandhi Case"],
-            correct: 2
-        },
-        {
-            q: "Which analytical matrix entity controls statutory framework operations for Monetary Policy target implementation setups inside India?",
-            options: ["Finance Commission of India", "Reserve Bank of India", "Securities and Exchange Board of India", "NITI Aayog"],
-            correct: 1
-        }
-    ];
+    const questions = {{ questions|tojson }};
 
     let currentIndex = 0;
     let userAnswers = new Array(questions.length).fill(null);
@@ -141,7 +157,10 @@
         document.getElementById("question-text").innerText = current.q;
         
         const container = document.getElementById("options-container");
+        const answerPanel = document.getElementById("answer-panel");
         container.innerHTML = "";
+        answerPanel.style.display = "none";
+        answerPanel.innerHTML = "";
         
         current.options.forEach((opt, idx) => {
             const btn = document.createElement("button");
@@ -151,6 +170,10 @@
             btn.onclick = () => selectOption(idx);
             container.appendChild(btn);
         });
+
+        if(userAnswers[currentIndex] !== null) {
+            revealAnswer();
+        }
 
         // Track state visibility logic
         document.getElementById("prev-btn").style.visibility = currentIndex === 0 ? "hidden" : "visible";
@@ -165,8 +188,31 @@
 
     function selectOption(index) {
         userAnswers[currentIndex] = index;
+        revealAnswer();
+    }
+
+    function revealAnswer() {
+        const current = questions[currentIndex];
+        const selected = userAnswers[currentIndex];
         const buttons = document.querySelectorAll(".option-btn");
-        buttons.forEach((b, i) => b.classList.toggle("selected", i === index));
+        buttons.forEach((button, index) => {
+            button.classList.toggle("selected", index === selected);
+            button.classList.toggle("correct", index === current.correct);
+            button.classList.toggle("incorrect", index === selected && selected !== current.correct);
+        });
+
+        const selectedCorrectly = selected === current.correct;
+        const sourceLink = current.source_url
+            ? `<a href="${current.source_url}" target="_blank" rel="noopener">${current.source || "Source"}</a>`
+            : (current.source || "Source unavailable");
+        const answerPanel = document.getElementById("answer-panel");
+        answerPanel.innerHTML = `
+            <strong>${selectedCorrectly ? "Correct" : "Not quite"}.</strong>
+            Correct answer: <strong>${current.options[current.correct]}</strong><br>
+            ${current.explanation || ""}
+            <div style="margin-top: 8px;">Source: ${sourceLink}</div>
+        `;
+        answerPanel.style.display = "block";
     }
 
     function changeQuestion(step) {

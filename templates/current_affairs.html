@@ -62,7 +62,7 @@
         </div>
         <h3 style="margin-bottom: 12px;">{{ feed.title }}</h3>
         <p style="color: var(--text-secondary); line-height: 1.6;">{{ feed.summary }}</p>
-        <a href="#" class="readmore-link">Read Full Editorial Review <i class="fa-solid fa-arrow-right-long"></i></a>
+        <a href="{{ feed.link or '#' }}" class="readmore-link">Read Full Editorial Review <i class="fa-solid fa-arrow-right-long"></i></a>
     </div>
     {% endfor %}
 </div>

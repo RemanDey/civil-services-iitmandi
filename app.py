@@ -15,6 +15,7 @@ import activities_module
 import pyq_module
 import gallery_module
 import current_affairs_module
+import quizzes_module
 
 # Initialize Flask application
 app = Flask(__name__)
@@ -24,9 +25,7 @@ announcements = announcements_module.announcements
 core = core_module.core_members
 images = gallery_module.images
 events = activities_module.activities
-feeds = current_affairs_module.current_affairs
 notes_data = notes_module.notes
-papers = pyq_module.pyqs
 
 # ----------------------------------------------------------------             
 # Routes
@@ -55,12 +54,14 @@ def activities():
 @app.route('/current-affairs')
 def current_affairs():
     """Renders the Current Affairs feed for exam preparation."""
+    feeds = current_affairs_module.get_current_affairs()
     return render_template('current_affairs.html', feeds=feeds)
 
 @app.route('/quizzes')
 def quizzes():
     """Renders the Quizzes landing page."""
-    return render_template('quizzes.html')
+    questions = quizzes_module.get_quizzes()
+    return render_template('quizzes.html', questions=questions)
 
 @app.route('/notes')
 def notes():
@@ -70,7 +71,10 @@ def notes():
 @app.route('/pyqs')
 def pyqs():
     """Renders the Previous Year Question (PYQ) papers section."""
-    return render_template('pyqs.html', papers=papers)
+    papers = pyq_module.get_pyqs()
+    exams = sorted({paper["exam"] for paper in papers})
+    years = sorted({paper["year"] for paper in papers}, reverse=True)
+    return render_template('pyqs.html', papers=papers, exams=exams, years=years)
 
 # ----------------------------------------------------------------
 # Execution
