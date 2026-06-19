@@ -21,7 +21,7 @@ import quizzes_module
 app = Flask(__name__)
 
 # Load data from modules into variables for template rendering
-
+announcements = announcements_module.announcements
 core = core_module.core_members
 images = gallery_module.images
 events = activities_module.activities
@@ -34,7 +34,7 @@ notes_data = notes_module.notes
 @app.route('/')
 def home():
     """Renders the Home page with the latest club announcements."""
-    announcements = announcements_module.announcements
+    
     return render_template('home.html', announcements=announcements)
 
 @app.route('/about')
