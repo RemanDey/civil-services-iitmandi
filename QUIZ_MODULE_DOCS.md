@@ -189,12 +189,19 @@ def quizzes():
 
 ## Testing
 
-### Run Tests
+### Verification
 ```bash
-python3 test_quizzes.py
+# Quick module test
+python3 -c "import quizzes_module; qs = quizzes_module.get_quizzes(); print(len(qs), 'questions')"
+
+# Flask route test
+python3 -c "from app import app; r = app.test_client().get('/quizzes'); print(r.status_code)"
+
+# Test JSON fetch
+python3 test.py
 ```
 
-### Test Coverage
+### Verified Behavior
 - ✅ Module returns valid question lists
 - ✅ Questions respect limit parameter
 - ✅ All questions have required fields

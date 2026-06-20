@@ -1,8 +1,16 @@
-notes = {
-        "One-Shot Series": [
-            {"title": "Notes", "type": "PDF", "download_link": "https://drive.google.com/drive/folders/1N50tVnfgxKYmw-rVoo5wwrte4h1zXcjB"},
-        ],
-        "Video Series": [
-            {"title": "The Video Series", "type": "youtube", "download_link": "https://drive.google.com/drive/folders/1nhho6sIq3YqH1z5rcVzsYhNJHZVUlDta?usp=sharing"}
-        ]
-    }
+import json
+import re
+import requests
+
+# GitHub URL for the notes file
+url = "https://raw.githubusercontent.com/civilservicesclub-iitmandi/website/main/notes"
+
+response = requests.get(url)
+if response.status_code == 200:
+    text = response.text
+    text = re.sub(r",\s*([}\]])", r"\1", text)
+    data = json.loads(text)
+    notes = data
+else:
+    notes = [{'category': 'Default', 'title': 'Error fetching notes', 'link': '#'}]
+

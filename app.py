@@ -20,36 +20,31 @@ import quizzes_module
 # Initialize Flask application
 app = Flask(__name__)
 
-# Load data from modules into variables for template rendering
-announcements = announcements_module.announcements
-core = core_module.core_members
-images = gallery_module.images
-events = activities_module.activities
-notes_data = notes_module.notes
-
 # ----------------------------------------------------------------             
 # Routes
 # ----------------------------------------------------------------
-
 @app.route('/')
 def home():
     """Renders the Home page with the latest club announcements."""
-    
+    announcements = announcements_module.announcements
     return render_template('home.html', announcements=announcements)
 
 @app.route('/about')
 def about():
     """Renders the About page containing details of core members."""
+    core = core_module.core_members
     return render_template('about.html', core=core)
 
 @app.route('/gallery')
 def gallery():
     """Renders the visual Gallery of past events and activities."""
+    images = gallery_module.images
     return render_template('gallery.html', images=images)
 
 @app.route('/activities')
 def activities():
     """Renders the Activities page showcasing upcoming and past club events."""
+    events = activities_module.activities
     return render_template('activities.html', events=events)
 
 @app.route('/current-affairs')
@@ -67,6 +62,7 @@ def quizzes():
 @app.route('/notes')
 def notes():
     """Renders the study resources and notes section."""
+    notes_data = notes_module.notes
     return render_template('notes.html', categories=notes_data)
 
 @app.route('/pyqs')

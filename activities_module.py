@@ -1,6 +1,13 @@
-activities=[
-        {"status": "Upcoming", "date": "June 19, Monday, 2026, 2026", "title": "One fdnvkndfvs", "desc": "A series ofsdvsfvsall important topics for the Civil Services Examination."},
-        {"status": "Upcoming", "date": "June 15, Monday, 2026, 2026", "title": "One Shot Series", "desc": "A series of intensive sessions covering all important topics for the Civil Services Examination."},
-        {"status": "Past", "date": "Jan 24, 2026", "title": "Interaction with Each Other", "desc": "An informal meet-up for all members to share their aspirations, preparation strategies, and expectations from the club."},
-        {"status": "Past", "date": "Jan 10, 2026", "title": "Orientation", "desc": "First Official Meet of the Civil Services Club, introducing new members to the club's vision, activities, and resources."},
-    ]
+import requests
+
+# Raw URL for the activities file
+url = "https://raw.githubusercontent.com/civilservicesclub-iitmandi/website/refs/heads/main/activities"
+
+response = requests.get(url)
+if response.status_code == 200:
+    data = response.json() 
+    activities = data
+    # Parse JSON into a Python list
+else:
+    activities = [{'date': 'Now', 'title': 'Error fetching activities', 'tag': 'ERROR'}]
+
