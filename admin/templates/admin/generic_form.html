@@ -1,0 +1,171 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<style>
+    .form-card {
+        max-width: 640px;
+        padding: 32px;
+    }
+    .form-card h2 { font-weight: 800; margin-bottom: 24px; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        padding: 11px 14px;
+        border-radius: 10px;
+        border: 1px solid var(--glass-border);
+        background: rgba(255,255,255,0.04);
+        color: white;
+        font-size: 0.95rem;
+        outline: none;
+        transition: border-color 0.2s;
+        font-family: inherit;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 2px var(--glass-focus);
+    }
+    .form-group textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+    .form-group select option {
+        background: #1a1a24;
+        color: white;
+    }
+    .form-group input[type="file"] {
+        padding: 8px;
+        background: transparent;
+        border-style: dashed;
+    }
+    .form-group input[type="file"]::file-selector-button {
+        padding: 6px 14px;
+        border: none;
+        border-radius: 6px;
+        background: rgba(255, 91, 14, 0.15);
+        color: var(--accent);
+        font-weight: 600;
+        cursor: pointer;
+        margin-right: 12px;
+    }
+    .form-group input[type="file"]::file-selector-button:hover {
+        background: rgba(255, 91, 14, 0.25);
+    }
+    .form-group .current-file {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 8px;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+    }
+    .form-group .current-file i { color: var(--accent); }
+    .form-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 28px;
+    }
+    .form-actions button {
+        padding: 12px 28px;
+        border: none;
+        border-radius: 10px;
+        background: var(--accent-gradient);
+        color: white;
+        font-weight: 700;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .form-actions button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px var(--accent-glow);
+    }
+    .form-actions .btn-cancel {
+        display: inline-flex;
+        align-items: center;
+        padding: 12px 24px;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid var(--glass-border);
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+    }
+    .form-actions .btn-cancel:hover {
+        background: rgba(255,255,255,0.08);
+        color: white;
+    }
+    .required-star { color: #f87171; margin-left: 2px; }
+</style>
+
+<div class="glass-card form-card">
+    <h2>{% if is_edit %}Edit{% else %}New{% endif %} {{ entity_name }}</h2>
+    <form method="POST" {% for f in fields if f.type == 'file' %}enctype="multipart/form-data"{% endfor %}>
+        {% for field in fields %}
+        <div class="form-group">
+            <label for="{{ field.name }}">
+                {{ field.label }}
+                {% if field.required %}<span class="required-star">*</span>{% endif %}
+            </label>
+
+            {% if field.type == 'textarea' %}
+            <textarea id="{{ field.name }}" name="{{ field.name }}" {% if field.required %}required{% endif %}
+                placeholder="{{ field.placeholder if field.placeholder else '' }}">{{ field.value if field.value else '' }}</textarea>
+
+            {% elif field.type == 'select' %}
+            <select id="{{ field.name }}" name="{{ field.name }}" {% if field.required %}required{% endif %}>
+                {% if not field.value %}
+                <option value="">-- Select --</option>
+                {% endif %}
+                {% for opt in field.options %}
+                {% if opt is iterable and opt is not string %}
+                <option value="{{ opt[0] }}" {% if field.value is not none and field.value|string == opt[0]|string %}selected{% endif %}>{{ opt[1] }}</option>
+                {% else %}
+                <option value="{{ opt }}" {% if field.value == opt %}selected{% endif %}>{{ opt }}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+
+            {% elif field.type == 'file' %}
+            <input type="file" id="{{ field.name }}" name="{{ field.name }}"
+                accept="{{ field.accept if field.accept else '' }}">
+            {% if field.current_file %}
+            <div class="current-file">
+                <i class="fa-regular fa-file-lines"></i> Current: {{ field.current_file }}
+            </div>
+            {% endif %}
+
+            {% else %}
+            <input type="{{ field.type }}" id="{{ field.name }}" name="{{ field.name }}"
+                value="{{ field.value if field.value else '' }}"
+                placeholder="{{ field.placeholder if field.placeholder else '' }}"
+                {% if field.required %}required{% endif %}>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <div class="form-actions">
+            <button type="submit">
+                <i class="fa-regular fa-floppy-disk"></i>
+                {% if is_edit %}Update{% else %}Create{% endif %}
+            </button>
+            {% set ep = entity_endpoint if entity_endpoint is defined else entity_url %}
+            <a href="{{ url_for('admin.' + ep + '_list') }}" class="btn-cancel">
+                <i class="fa-solid fa-xmark"></i> Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

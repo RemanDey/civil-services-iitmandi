@@ -1,0 +1,122 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<style>
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 20px;
+        margin-bottom: 32px;
+    }
+    .stat-card {
+        padding: 24px 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(255, 91, 14, 0.3);
+    }
+    .stat-card .stat-number {
+        font-size: 2.6rem;
+        font-weight: 900;
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        line-height: 1.2;
+    }
+    .stat-card .stat-label {
+        color: var(--text-secondary);
+        font-size: 0.88rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 4px;
+    }
+    .stat-card i {
+        font-size: 1.4rem;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+    }
+    .quick-links {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px;
+    }
+    .quick-links a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 18px;
+        text-decoration: none;
+        color: var(--text-primary);
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+    .quick-links a:hover {
+        border-color: var(--accent);
+        background: rgba(255, 91, 14, 0.06);
+    }
+    .quick-links a i {
+        width: 20px;
+        color: var(--accent);
+    }
+</style>
+
+<h2 style="margin-bottom: 24px; font-weight: 800;">Dashboard</h2>
+
+<div class="stats-grid">
+    <div class="stat-card glass-card">
+        <i class="fa-solid fa-bullhorn"></i>
+        <div class="stat-number">{{ stats.announcements }}</div>
+        <div class="stat-label">Announcements</div>
+    </div>
+    <div class="stat-card glass-card">
+        <i class="fa-solid fa-calendar-days"></i>
+        <div class="stat-number">{{ stats.activities }}</div>
+        <div class="stat-label">Activities</div>
+    </div>
+    <div class="stat-card glass-card">
+        <i class="fa-solid fa-users"></i>
+        <div class="stat-number">{{ stats.members }}</div>
+        <div class="stat-label">Core Members</div>
+    </div>
+    <div class="stat-card glass-card">
+        <i class="fa-solid fa-images"></i>
+        <div class="stat-number">{{ stats.gallery }}</div>
+        <div class="stat-label">Gallery Images</div>
+    </div>
+    <div class="stat-card glass-card">
+        <i class="fa-solid fa-folder-tree"></i>
+        <div class="stat-number">{{ stats.note_categories }}</div>
+        <div class="stat-label">Note Categories</div>
+    </div>
+    <div class="stat-card glass-card">
+        <i class="fa-solid fa-book"></i>
+        <div class="stat-number">{{ stats.notes }}</div>
+        <div class="stat-label">Notes</div>
+    </div>
+</div>
+
+<h3 style="margin-bottom: 16px; font-weight: 700;">Quick Actions</h3>
+<div class="quick-links">
+    <a href="{{ url_for('admin.announcements_new') }}" class="glass-card">
+        <i class="fa-solid fa-plus"></i> New Announcement
+    </a>
+    <a href="{{ url_for('admin.activities_new') }}" class="glass-card">
+        <i class="fa-solid fa-plus"></i> New Activity
+    </a>
+    <a href="{{ url_for('admin.members_new') }}" class="glass-card">
+        <i class="fa-solid fa-plus"></i> New Core Member
+    </a>
+    <a href="{{ url_for('admin.gallery_new') }}" class="glass-card">
+        <i class="fa-solid fa-plus"></i> New Gallery Image
+    </a>
+    <a href="{{ url_for('admin.note_categories_new') }}" class="glass-card">
+        <i class="fa-solid fa-plus"></i> New Note Category
+    </a>
+    <a href="{{ url_for('admin.notes_new') }}" class="glass-card">
+        <i class="fa-solid fa-plus"></i> New Note
+    </a>
+</div>
+{% endblock %}

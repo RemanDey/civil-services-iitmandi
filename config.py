@@ -1,0 +1,8 @@
+import os
+
+class Config:
+    SECRET_KEY = "9dc1c99f25ab7eb4387ad0a91fd519f7d451e4a88c41af4f470b1b2810ad2aab"
+    SQLALCHEMY_DATABASE_URI = "sqlite:///site.db"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    ADMIN_USERNAME = "admin"
+    ADMIN_PASSWORD_HASH = "scrypt:32768:8:1$l6rByBXCHWA8nKzP$e069b77bd6bc196828fedac95c2b0aa11fac2856065fe66c92776e87d05b676cd83237b79a4ffdb4a41d2c733abac2de379dbcc8efa66068d6351b01ffa375cf"

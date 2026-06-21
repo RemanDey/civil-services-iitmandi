@@ -1,0 +1,100 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<style>
+    .list-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .list-header h2 { font-weight: 800; }
+
+    .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .admin-table thead th {
+        text-align: left;
+        padding: 12px 14px;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-secondary);
+        border-bottom: 1px solid var(--glass-border);
+        font-weight: 700;
+    }
+    .admin-table tbody tr {
+        transition: background 0.2s ease;
+    }
+    .admin-table tbody tr:hover {
+        background: rgba(255, 255, 255, 0.02);
+    }
+    .admin-table tbody td {
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--glass-border);
+        font-size: 0.92rem;
+        vertical-align: middle;
+    }
+    .admin-table tbody tr:last-child td { border-bottom: none; }
+    .actions { white-space: nowrap; }
+    .actions a { margin-right: 6px; }
+
+    .empty-state {
+        text-align: center;
+        padding: 48px 20px;
+        color: var(--text-secondary);
+    }
+    .empty-state i { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.4; }
+    .empty-state p { font-size: 1rem; }
+</style>
+
+{% set ep = entity_endpoint if entity_endpoint is defined else entity_url %}
+<div class="glass-card" style="padding: 24px;">
+    <div class="list-header">
+        <h2>{{ entity_name }}</h2>
+        <a href="{{ url_for('admin.' + ep + '_new') }}" class="cta-btn" style="font-size: 0.85rem; padding: 10px 22px;">
+            <i class="fa-solid fa-plus"></i> Add {{ entity_name[:-1] if entity_name.endswith('s') else entity_name }}
+        </a>
+    </div>
+
+    {% if rows %}
+    <div style="overflow-x: auto;">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    {% for col in columns %}
+                    <th>{{ col }}</th>
+                    {% endfor %}
+                    <th style="width: 120px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for id, values in rows %}
+                <tr>
+                    {% for val in values %}
+                    <td>{{ val }}</td>
+                    {% endfor %}
+                    <td class="actions">
+                        <a href="{{ url_for('admin.' + ep + '_edit', id=id) }}" class="btn btn-sm">
+                            <i class="fa-regular fa-pen-to-square"></i> Edit
+                        </a>
+                        <a href="{{ url_for('admin.' + ep + '_delete', id=id) }}" class="btn btn-sm btn-danger">
+                            <i class="fa-regular fa-trash-can"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state glass-card">
+        <i class="fa-solid fa-inbox"></i>
+        <p>No {{ entity_name|lower }} yet.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

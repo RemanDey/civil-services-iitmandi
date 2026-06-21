@@ -1,0 +1,81 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<style>
+    .delete-card {
+        max-width: 520px;
+        padding: 32px;
+        text-align: center;
+    }
+    .delete-card .icon {
+        font-size: 3rem;
+        color: #f87171;
+        margin-bottom: 16px;
+    }
+    .delete-card h2 { font-weight: 800; margin-bottom: 8px; }
+    .delete-card p { color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; }
+    .delete-card .item-preview {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid var(--glass-border);
+        border-radius: 10px;
+        padding: 14px 18px;
+        margin-bottom: 24px;
+        font-size: 1.05rem;
+        font-weight: 600;
+        word-break: break-word;
+    }
+    .delete-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+    }
+    .delete-actions button {
+        padding: 12px 28px;
+        border: none;
+        border-radius: 10px;
+        background: #dc2626;
+        color: white;
+        font-weight: 700;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .delete-actions button:hover {
+        background: #b91c1c;
+        transform: translateY(-2px);
+    }
+    .delete-actions .btn-cancel {
+        display: inline-flex;
+        align-items: center;
+        padding: 12px 24px;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid var(--glass-border);
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+    }
+    .delete-actions .btn-cancel:hover {
+        background: rgba(255,255,255,0.08);
+        color: white;
+    }
+</style>
+
+<div class="glass-card delete-card">
+    <div class="icon"><i class="fa-regular fa-circle-exclamation"></i></div>
+    <h2>Delete {{ entity_name }}</h2>
+    <p>Are you sure you want to delete this {{ entity_name|lower }}? This action cannot be undone.</p>
+
+    <div class="item-preview">{{ item }}</div>
+
+    <form method="POST" class="delete-actions">
+        <button type="submit"><i class="fa-regular fa-trash-can"></i> Yes, Delete</button>
+        {% set ep = entity_endpoint if entity_endpoint is defined else entity_url %}
+        <a href="{{ url_for('admin.' + ep + '_list') }}" class="btn-cancel">
+            <i class="fa-solid fa-xmark"></i> Cancel
+        </a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .admin-layout { display: flex; gap: 24px; align-items: flex-start; }
+    .admin-sidebar {
+        flex: 0 0 220px;
+        position: sticky;
+        top: 24px;
+    }
+    .admin-sidebar .glass-card { padding: 16px; }
+    .admin-sidebar h3 {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--text-secondary);
+        margin-bottom: 12px;
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 8px;
+    }
+    .admin-sidebar a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--text-secondary);
+        text-decoration: none;
+        padding: 8px 10px;
+        border-radius: 8px;
+        font-size: 0.92rem;
+        transition: all 0.2s ease;
+    }
+    .admin-sidebar a:hover,
+    .admin-sidebar a.active {
+        background: rgba(255, 91, 14, 0.1);
+        color: var(--accent);
+    }
+    .admin-sidebar a i { width: 18px; text-align: center; }
+    .admin-content { flex: 1; min-width: 0; }
+
+    @media (max-width: 768px) {
+        .admin-layout { flex-direction: column; }
+        .admin-sidebar { flex: none; width: 100%; position: static; }
+        .admin-sidebar .nav-links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+    }
+</style>
+
+<div class="admin-layout">
+    <aside class="admin-sidebar">
+        <div class="glass-card">
+            <h3><i class="fa-solid fa-shield-halved" style="color: var(--accent);"></i> Admin Panel</h3>
+            <div class="nav-links-grid">
+                <a href="{{ url_for('admin.dashboard') }}" class="{% if request.endpoint == 'admin.dashboard' %}active{% endif %}">
+                    <i class="fa-solid fa-gauge-high"></i> Dashboard
+                </a>
+                <a href="{{ url_for('admin.announcements_list') }}" class="{% if request.endpoint and 'announcements' in request.endpoint %}active{% endif %}">
+                    <i class="fa-solid fa-bullhorn"></i> Announcements
+                </a>
+                <a href="{{ url_for('admin.activities_list') }}" class="{% if request.endpoint and 'activities' in request.endpoint %}active{% endif %}">
+                    <i class="fa-solid fa-calendar-days"></i> Activities
+                </a>
+                <a href="{{ url_for('admin.members_list') }}" class="{% if request.endpoint and 'members' in request.endpoint %}active{% endif %}">
+                    <i class="fa-solid fa-users"></i> Core Members
+                </a>
+                <a href="{{ url_for('admin.gallery_list') }}" class="{% if request.endpoint and 'gallery' in request.endpoint %}active{% endif %}">
+                    <i class="fa-solid fa-images"></i> Gallery
+                </a>
+                <a href="{{ url_for('admin.note_categories_list') }}" class="{% if request.endpoint and 'note_categories' in request.endpoint %}active{% endif %}">
+                    <i class="fa-solid fa-folder-tree"></i> Note Categories
+                </a>
+                <a href="{{ url_for('admin.notes_list') }}" class="{% if request.endpoint and 'notes' in request.endpoint %}active{% endif %}">
+                    <i class="fa-solid fa-book"></i> Notes
+                </a>
+                <a href="{{ url_for('admin.logout') }}" style="border-top: 1px solid var(--glass-border); margin-top: 8px; padding-top: 12px;">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </a>
+            </div>
+        </div>
+    </aside>
+    <main class="admin-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        {% block admin_content %}{% endblock %}
+    </main>
+</div>
+{% endblock %}
