@@ -1,4 +1,5 @@
 """Generate admin config for the admin panel."""
+from pathlib import Path
 from werkzeug.security import generate_password_hash
 
 username = input("Admin username [admin]: ").strip() or "admin"
@@ -13,19 +14,15 @@ if not secret:
 
 hash_str = generate_password_hash(password)
 
-content = f'''import os
-
-class Config:
-    SECRET_KEY = "{secret}"
-    SQLALCHEMY_DATABASE_URI = "sqlite:///site.db"
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    ADMIN_USERNAME = "{username}"
-    ADMIN_PASSWORD_HASH = "{hash_str}"
+content = f'''SECRET_KEY="{secret}"
+SQLALCHEMY_DATABASE_URI=sqlite:///site.db
+SQLALCHEMY_TRACK_MODIFICATIONS=False
+ADMIN_USERNAME="{username}"
+ADMIN_PASSWORD_HASH="{hash_str}"
 '''
 
-with open("config.py", "w") as f:
-    f.write(content)
+Path(".env").write_text(content)
 
-print("config.py created successfully!")
+print(".env created successfully!")
 print(f"Username: {username}")
 print("You can now run the app and log in at /admin/login")
